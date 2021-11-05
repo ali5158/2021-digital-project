@@ -8,7 +8,8 @@
 <body>
 	<div class ="header">
 	 <div class="rhslogo">
-	 	<img src ="assets/img/riccarton-crest-with-text.png">
+	 	<img src ="assets/img/riccarton-crest-with-text.png" class="normal">
+	 	<img src ="assets/img/riccarton-crest.png" class="small-screen">
 	 </div>
 	 <div class="navbar">
 			<?php

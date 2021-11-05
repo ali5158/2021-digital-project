@@ -21,7 +21,7 @@ body {
 	width: auto;
 }
 
-navbar {
+.navbar {
 	overflow: hidden;
 }
 
@@ -32,4 +32,26 @@ navbar {
 	padding: 14px 16px;
 	text-decoration: none;
 	font-size: 15pt;
+}
+
+.small-screen {
+	display: none;
+}
+
+@media screen and (max-width: 600px) {
+	.navbar a {
+		float: none;
+		width: 100%;
+		text-align: center;
+		padding-left: 0;
+	}
+
+	.normal {
+		display: none;
+	}
+
+	.small-screen {
+		display: block;
+	}
+
 }
