@@ -1,4 +1,8 @@
 .footer {
+	background: #e3e3e3;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
 	margin-top: auto;
-	display: inline-block;
+	position: absolute;
 }
