@@ -21,7 +21,12 @@
 
   <div class="inputlabel">
    <label for = "mobilenumber">Mobile Number</label>
-   <input type = "text" name = "mobile_number" placeholder="0-9, '-', '()'">
+   <input type = "text" name = "mobilenumber" placeholder="0-9, '-', '()'">
+  </div>
+
+  <div class = "inputlabel">
+   <label for = "emailaddress">Email Address</label>
+   <input type = "text" name = "emailaddress" placeholder="0-9, '-', '()'">
   </div>
 
   <div class="inputlabel">
