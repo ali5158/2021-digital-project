@@ -36,3 +36,6 @@
 
   <input type = "submit" name = "submit" value = "Sign up">
  </form>
+</div>
+
+ <?php include_once "includes/footer.php"?>
