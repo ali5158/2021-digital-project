@@ -4,8 +4,8 @@
  <?php 
  date_default_timezone_set("pacific/auckland");
  $currentdate = date("d/m/y h:i A");
- echo "<p>Made by Alex Davis in 2021 " . $currentdate . "</p>";
+ echo "<p>Made by Alex Davis " . $currentdate . "</p>";
  ?>
 </div>
 </body>
-</html>
+</html>,
