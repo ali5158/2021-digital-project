@@ -149,5 +149,8 @@ function loginUser($conn,$email,$password) {
 		$_SESSION["username"] = $emailexists["userfirstname"];
 		header("location: ../profile.php");
 		exit();
+
+
+		asdfasdfasdf
 	}
 }

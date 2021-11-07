@@ -18,7 +18,7 @@
    <input type = "password" name = "password" placeholder = "Password">
   </div>
 
-  <input type = "submit" name = "submit" value = "Login">
+  <input type = "submit" name = "submit" value = "user login">
  </form>
 </div>
 
