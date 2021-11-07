@@ -111,3 +111,43 @@ function createuser($conn, $firstname, $lastname, $email, $mobilenumber, $passwo
 }
 
 /* Login Functions */
+
+function emptyInputLogin($email,$password) {
+	$result;
+
+	if (empty($email) || empty($password)) {
+		$result = true;
+	} 
+
+	else {
+		$result = false;
+	}
+
+	return $result;
+}
+
+
+function loginUser($conn,$email,$password) {
+	$emailexists = emailExists($conn,$email);
+
+	if ($emailexists === true) {
+		header("location: ../login.php?error=emailexists");
+		exit();
+	}
+
+	$passwordHashed = $emailExists["userPassword"];
+	$checkPassword = password_verify($password,$passwordhashed);
+
+	if ($checkPassword === false) {
+		header("location: ../login.php?error=passwordincorrect");
+		exit();
+	}
+	else if ($checkpassword === true) {
+		session_start()
+		$_SESSION["userid"] = $emailexists["userid"];
+		$_SESSION["useremail"] = $emailexists["useremail"];
+		$_SESSION["username"] = $emailexists["userfirstname"];
+		header("location: ../profile.php");
+		exit();
+	}
+}
