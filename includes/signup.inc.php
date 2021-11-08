@@ -12,4 +12,30 @@
  	require_once 'functions.inc.php';
  }
 
- if (emptyInput)
+ if (emptyInputSignup($firstname,$lastname,$email,$mobilenumber,$password,$passwordrepeat !== false)) {
+    header("location: ../signup.php?error=emptyinput");
+    exit();
+ }
+
+ if (invalidEmail($email) !== false) {
+    header("location: ../signup.php?error=invalidemail");
+    exit();
+ }
+
+ if (passwordMatch($password,$passwordrepeat) !== false) {
+    echo $password;
+    echo '<br>';
+    echo $passwordrepeat;
+
+    //header("location: ../signup.php?error=passwordsdontmatchs");
+    exit();
+ }
+
+ if (emailExists($conn,$email) !== false) {
+    header("location: ../signup.php?error=emailexists");
+    exit();
+ }
+
+ $mobilenumber = validateMobileNumber($mobilenumber);
+
+ createUser($conn,$firstname,$lastname,$email,$mobilenumber,$password);

@@ -25,7 +25,7 @@ function invalidEmail($email) {
 	} 
 
 	else {
-		$result = false:
+		$result = false;
 	}
 
 	return $result;
@@ -51,21 +51,21 @@ function emailExists($conn,$email) {
 	$stmt = mysqli_stmt_init($conn);
 
 	if(!mysqli_stmt_prepare($stmt,$sql)) {
-		header("location: ../signup.php?error=statementfailed")
+		header("location: ../signup.php?error=statementfailed");
 		exit();
 	}
 
 	mysqli_stmt_bind_param($stmt,"s",$email);
 	mysqli_stmt_execute($stmt);
 
-	$resultData = mysqli_stmt_get_result($stmt)
+	$resultData = mysqli_stmt_get_result($stmt);
 
 	if ($row = mysqli_fetch_assoc($resultData)) {
 		return $row;
 	}
 
 	else {
-		$result = true;
+		$result = false;
 		return $result;
 	}
 
@@ -76,16 +76,17 @@ function emailExists($conn,$email) {
 function validateMobileNumber($mobilenumber) {
 	$charactersToReplace = array("-","(",")"," ");
 	$mobilenumber = str_replace($charactersToReplace,"",$mobilenumber);
+	echo $mobilenumber;
 
 	if(strlen($mobilenumber) !== 10) {
 		if(strlen($mobilenumber) !== 11) {
-			header("location: ../signup.php?error=phonelengthinvalid");
+			//header("location: ../signup.php?error=phonelengthinvalid");
 			exit();
 		}
 	}
 
 	if (!is_numeric($mobilenumber)) {
-		header("location: ../signup.php?error=phonecontainsletters")
+		header("location: ../signup.php?error=phonecontainsletters");
 		exit();
 	}
 	return $mobilenumber;
@@ -94,7 +95,7 @@ function validateMobileNumber($mobilenumber) {
 
 function createuser($conn, $firstname, $lastname, $email, $mobilenumber, $password) {
 	$sql = "INSERT INTO users (userfirstname,userlastname,useremail,usermobilephone,userpassword) VALUES (?,?,?,?,?);";
-	$stmt = mysqli_stmt_init($conn)
+	$stmt = mysqli_stmt_init($conn);
 
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
 		header("location: ../signup.php?error=statementfailed");
@@ -106,7 +107,7 @@ function createuser($conn, $firstname, $lastname, $email, $mobilenumber, $passwo
 	mysqli_stmt_bind_param($stmt,"sssss",$firstname,$lastname,$email,$mobilenumber,$hashedpassword);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
-	header("location: ../signup.php?error=none")
+	header("location: ../signup.php?error=none");
 	exit();
 }
 
@@ -143,14 +144,11 @@ function loginUser($conn,$email,$password) {
 		exit();
 	}
 	else if ($checkpassword === true) {
-		session_start()
+		session_start();
 		$_SESSION["userid"] = $emailexists["userid"];
 		$_SESSION["useremail"] = $emailexists["useremail"];
 		$_SESSION["username"] = $emailexists["userfirstname"];
 		header("location: ../profile.php");
 		exit();
-
-
-		asdfasdfasdf
 	}
 }
