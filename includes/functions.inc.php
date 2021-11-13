@@ -115,6 +115,10 @@ function createuser($conn, $firstname, $lastname, $email, $mobilenumber, $passwo
 
 function emptyInputLogin($email,$password) {
 	$result;
+	echo $email . "<br>";
+	echo $password . "<br>";
+	echo empty($email);
+	echo empty($password);
 
 	if (empty($email) || empty($password)) {
 		$result = true;
@@ -123,7 +127,6 @@ function emptyInputLogin($email,$password) {
 	else {
 		$result = false;
 	}
-
 	return $result;
 }
 

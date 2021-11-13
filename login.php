@@ -10,7 +10,7 @@
 
   <div class="inputlabel">
    <label for = "emailaddress">Email</label>
-   <input type = "text" name = "emailaddress" placeholder="Email Address">
+   <input type = "text" name = "email" placeholder="Email Address">
   </div>
 
   <div class="inputlabel">
