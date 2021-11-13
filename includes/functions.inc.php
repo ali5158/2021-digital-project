@@ -115,8 +115,6 @@ function createuser($conn, $firstname, $lastname, $email, $mobilenumber, $passwo
 
 function emptyInputLogin($email,$password) {
 	$result;
-	echo $email . "<br>";
-	echo $password . "<br>";
 
 	if (empty($email) || empty($password)) {
 		$result = true;
@@ -138,11 +136,10 @@ function loginUser($conn,$email,$password) {
 	}
 
 	$passwordhashed = $emailexists["userPassword"];
-	echo "User Password: " . $passwordhashed; 
 	$checkPassword = password_verify($password,$passwordhashed);
 
 	if ($checkPassword === false) {
-		//header("location: ../login.php?error=passwordincorrect");
+		header("location: ../login.php?error=passwordincorrect");
 		exit();
 	}
 	else if ($checkPassword === true) {
