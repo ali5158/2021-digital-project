@@ -117,8 +117,6 @@ function emptyInputLogin($email,$password) {
 	$result;
 	echo $email . "<br>";
 	echo $password . "<br>";
-	echo empty($email);
-	echo empty($password);
 
 	if (empty($email) || empty($password)) {
 		$result = true;
@@ -134,23 +132,24 @@ function emptyInputLogin($email,$password) {
 function loginUser($conn,$email,$password) {
 	$emailexists = emailExists($conn,$email);
 
-	if ($emailexists === true) {
+	if ($emailexists === false) {
 		header("location: ../login.php?error=emailexists");
 		exit();
 	}
 
-	$passwordHashed = $emailExists["userPassword"];
+	$passwordhashed = $emailexists["userPassword"];
+	echo "User Password: " . $passwordhashed; 
 	$checkPassword = password_verify($password,$passwordhashed);
 
 	if ($checkPassword === false) {
-		header("location: ../login.php?error=passwordincorrect");
+		//header("location: ../login.php?error=passwordincorrect");
 		exit();
 	}
-	else if ($checkpassword === true) {
+	else if ($checkPassword === true) {
 		session_start();
 		$_SESSION["userid"] = $emailexists["userid"];
-		$_SESSION["useremail"] = $emailexists["useremail"];
-		$_SESSION["username"] = $emailexists["userfirstname"];
+		$_SESSION["useremail"] = $emailexists["userEmail"];
+		$_SESSION["username"] = $emailexists["userFirstName"];
 		header("location: ../profile.php");
 		exit();
 	}
