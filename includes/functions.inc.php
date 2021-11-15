@@ -47,7 +47,7 @@ function passwordMatch($password,$passwordrepeat) {
 
 
 function emailExists($conn,$email) {
-	$sql = "SELECT * FROM users WHERE userEmail = ?;";
+	$sql = "SELECT * FROM users WHERE user_email = ?;";
 	$stmt = mysqli_stmt_init($conn);
 
 	if(!mysqli_stmt_prepare($stmt,$sql)) {
@@ -94,11 +94,11 @@ function validateMobileNumber($mobilenumber) {
 
 
 function createuser($conn, $firstname, $lastname, $email, $mobilenumber, $password) {
-	$sql = "INSERT INTO users (userfirstname,userlastname,useremail,usermobilephone,userpassword) VALUES (?,?,?,?,?);";
+	$sql = "INSERT INTO users (user_first_name,user_last_name,user_email,user_mobile,user_password) VALUES (?,?,?,?,?);";
 	$stmt = mysqli_stmt_init($conn);
 
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
-		header("location: ../signup.php?error=statementfailed");
+		header("location: ../signup.php?error=statementfailedd");
 		exit();
 	}
 
@@ -135,7 +135,7 @@ function loginUser($conn,$email,$password) {
 		exit();
 	}
 
-	$passwordhashed = $emailexists["userPassword"];
+	$passwordhashed = $emailexists["user_password"];
 	$checkPassword = password_verify($password,$passwordhashed);
 
 	if ($checkPassword === false) {
@@ -144,9 +144,9 @@ function loginUser($conn,$email,$password) {
 	}
 	else if ($checkPassword === true) {
 		session_start();
-		$_SESSION["userid"] = $emailexists["userid"];
-		$_SESSION["useremail"] = $emailexists["userEmail"];
-		$_SESSION["username"] = $emailexists["userFirstName"];
+		$_SESSION["user_id"] = $emailexists["user_id"];
+		$_SESSION["user_email"] = $emailexists["user_email"];
+		$_SESSION["user_first_name"] = $emailexists["user_first_name"];
 		header("location: ../profile.php");
 		exit();
 	}
@@ -154,3 +154,20 @@ function loginUser($conn,$email,$password) {
 
 // Upload Functions
 
+function createItem($conn,$item_name,$category,$item_value,$date_lost) {
+	$sql = "INSERT INTO items (item_name,date_lost,category_id,item_value) VALUES (?,?,?,?);";
+	$stmt = mysqli_stmt_init($conn);
+
+	if (!mysqli_stmt_prepare($stmt, $sql)) {
+		header("location: ../upload.php?error=statementfailed");
+		exit();
+	}
+
+
+	mysqli_stmt_bind_param($stmt,"ssss",$item_name,$date_lost,$category,$item_value);
+	mysqli_stmt_execute($stmt);
+	mysqli_stmt_close($stmt);
+	header("location: ../upload.php?error=none");
+	exit();
+
+}

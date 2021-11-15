@@ -17,12 +17,12 @@ $all_categories = mysqli_query($conn,$sql);
 
   <div class="inputlabel">
    <label for = "itemname">Item Name</label>
-   <input type = "text" name= "itemname" placeholder= "Item Name">
+   <input type = "text" name= "item_name" placeholder= "Item Name">
   </div>
 
   <div class = "inputlabel">
     <label for = "category">Category</label>
-    <select name = "Category">
+    <select name = "category">
         <?php while($category = mysqli_fetch_array($all_categories,MYSQLI_ASSOC)): ?>
             <option value="<?php echo $category["category_id"]; ?>">
                 <?php echo $category["category_name"]; ?>
@@ -33,12 +33,12 @@ $all_categories = mysqli_query($conn,$sql);
 
   <div class="inputlabel">
    <label for = "itemvalue">Value</label>
-   <input type = "text" name= "itemvalue" placeholder= "Item Value">
+   <input type = "text" name= "item_value" placeholder= "Item Value">
   </div>
 
   <div class = "inputlabel">
-  	<label for = "datelost">Date Lost</label>
-  	<input type = "date" value="<?php  date_default_timezone_set("pacific/auckland"); echo date("Y-m-d"); ?>" name ="datelost">
+  	<label for = "date_lost">Date Lost</label>
+  	<input type = "date" value="<?php  date_default_timezone_set("pacific/auckland"); echo date("Y-m-d"); ?>" name ="date_lost">
   </div>
 
 

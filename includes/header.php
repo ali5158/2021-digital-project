@@ -17,7 +17,7 @@
   					session_start();
 			}
 
-			if (isset($_SESSION["useremail"])) {
+			if (isset($_SESSION["user_email"])) {
 				echo "<a href= 'profile.php'>Profile</a>";
 				echo "<a href= 'items.php'>Items</a>";
 				echo "<a href= 'upload.php'>Upload Item</a>";
