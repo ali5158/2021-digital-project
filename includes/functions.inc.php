@@ -151,3 +151,5 @@ function loginUser($conn,$email,$password) {
 		exit();
 	}
 }
+
+// Upload Functions
