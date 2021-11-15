@@ -1,4 +1,7 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+  	session_start();
+}
 
 if(isset($_POST["submit"])) {
 
@@ -6,6 +9,7 @@ if(isset($_POST["submit"])) {
 	$category = $_POST["category"];
 	$item_value = $_POST["item_value"];
 	$date_lost = $_POST["date_lost"];
+	$user_id = $_SESSION["user_id"];
 
 	//echo $item_name . '<br>';
 	//echo $category . '<br>';
@@ -17,7 +21,7 @@ if(isset($_POST["submit"])) {
 	require_once 'dbh.inc.php';
 	require_once 'functions.inc.php';
 
-	createItem($conn,$item_name,$category,$item_value,$date_lost);
+	createItem($conn,$item_name,$category,$item_value,$date_lost,$user_id);
 
 }
 else {

@@ -154,8 +154,8 @@ function loginUser($conn,$email,$password) {
 
 // Upload Functions
 
-function createItem($conn,$item_name,$category,$item_value,$date_lost) {
-	$sql = "INSERT INTO items (item_name,date_lost,category_id,item_value) VALUES (?,?,?,?);";
+function createItem($conn,$item_name,$category,$item_value,$date_lost,$user_id) {
+	$sql = "INSERT INTO items (item_name,date_lost,category_id,item_value,user_id) VALUES (?,?,?,?,?);";
 	$stmt = mysqli_stmt_init($conn);
 
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -164,7 +164,7 @@ function createItem($conn,$item_name,$category,$item_value,$date_lost) {
 	}
 
 
-	mysqli_stmt_bind_param($stmt,"ssss",$item_name,$date_lost,$category,$item_value);
+	mysqli_stmt_bind_param($stmt,"sssss",$item_name,$date_lost,$category,$item_value,$user_id);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
 	header("location: ../upload.php?error=none");
