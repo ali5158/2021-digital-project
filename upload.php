@@ -1,4 +1,5 @@
 <?php include_once 'includes/header.php' ?>
+<?php include_once 'includes/login-check.php' ?>
 
 <h2>Upload an Item</h2>
 <h4>Please fill all fields</h4>
@@ -31,4 +32,11 @@
   <input type = "submit" name = "submit" value = "Upload">
 </form>
 
+<?php 
+if (isset($_GET["error"])) {
+    if ($_GET["error"] == "none") {
+        echo "<div class='isa_success'>" . "<i class='fa fa-check'></i>Item uploaded" . "</div>";
+    }
+}
+?>
 </div>

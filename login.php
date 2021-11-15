@@ -18,8 +18,30 @@
    <input type = "password" name = "password" placeholder = "Password">
   </div>
 
-  <input type = "submit" name = "submit" value = "user login">
+  <input type = "submit" name = "submit" value = "Login">
  </form>
 </div>
+<?php 
+if (isset($_GET["error"])) {
+    if ($_GET["error"] == "notloggedin") {
+        echo "<div class='isa_error'>" . "<i class='fa fa-times-circle'></i>You must be signed in to view this content" . "</div>";
+    }
 
+    if ($_GET["error"] == "passwordincorrect") {
+        echo "<div class='isa_error'>" . "<i class='fa fa-times-circle'></i>Incorrect password" . "</div>";
+    }
+
+    if ($_GET["error"] == "emptyinput") {
+        echo "<div class='isa_error'>" . "<i class='fa fa-times-circle'></i>Please fill both fields before submitting" . "</div>";
+    }
+
+    if ($_GET["error"] == "emailexists") {
+        echo "<div class='isa_error'>" . "<i class='fa fa-times-circle'></i>Email does not exist" . "</div>";
+    }
+
+    if ($_GET["error"] == "loggedout") {
+        echo "<div class='isa_success'>" . "<i class='fa fa-check'></i>You have successfully logged out" . "</div>";
+    }
+}
+?>
  <?php include_once "includes/footer.php"?>

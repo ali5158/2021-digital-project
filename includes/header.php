@@ -13,18 +13,21 @@
 	 </div>
 	 <div class="navbar">
 			<?php
-				if (isset($_SESSION["useremail"])) {
-					echo "<a href= 'profile.php'>Profile</a>";
-					echo "<a href= 'items.php'>Items</a>";
-					echo "<a href= 'upload.php'>Upload Item</a>";
-					echo "<a href = 'includes/logout.inc.php'>Logout</a>";
-				}
-				else {
-					echo "<a href = 'signup.php'>Sign Up</a>";
-					echo "<a href = 'login.php'>Login</a>";
-				}
-				?>
+			if (session_status() == PHP_SESSION_NONE) {
+  					session_start();
+			}
 
+			if (isset($_SESSION["useremail"])) {
+				echo "<a href= 'profile.php'>Profile</a>";
+				echo "<a href= 'items.php'>Items</a>";
+				echo "<a href= 'upload.php'>Upload Item</a>";
+				echo "<a href = 'includes/logout.inc.php'>Logout</a>";
+			}
+			else {
+				echo "<a href = 'signup.php'>Sign Up</a>";
+				echo "<a href = 'login.php'>Login</a>";
+			}
+			?>
 	 </div>
 	</div>
 
