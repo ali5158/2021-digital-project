@@ -18,8 +18,8 @@
 			}
 
 			if (isset($_SESSION["user_email"])) {
-				echo "<a href= 'profile.php'>Profile</a>";
-				echo "<a href= 'items.php'>Items</a>";
+				echo "<a href= 'profile.php'>My Items</a>";
+				echo "<a href= 'items.php'>Search</a>";
 				echo "<a href= 'upload.php'>Upload Item</a>";
 				echo "<a href = 'includes/logout.inc.php'>Logout</a>";
 			}

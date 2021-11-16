@@ -44,4 +44,3 @@ if (isset($_GET["error"])) {
     }
 }
 ?>
- <?php include_once "includes/footer.php"?>

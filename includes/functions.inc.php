@@ -154,6 +154,14 @@ function loginUser($conn,$email,$password) {
 
 // Upload Functions
 
+
+
+function dateCheck($date_lost) {
+	exit();
+}
+
+
+
 function createItem($conn,$item_name,$category,$item_value,$date_lost,$user_id) {
 	$sql = "INSERT INTO items (item_name,date_lost,category_id,item_value,user_id) VALUES (?,?,?,?,?);";
 	$stmt = mysqli_stmt_init($conn);

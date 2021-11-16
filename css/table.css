@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+table {
+	width: 600px;
+	text-align: center;
+	margin: auto;
+	font-family: 'Open Sans', sans-serif;
+}
+td {
+	text-align: left;
+}
+
+table, th, td {
+	border: 1px solid #000;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 5px;
+}
+.column-header {
+	font-weight: bold;
+}

@@ -11,15 +11,9 @@ if(isset($_POST["submit"])) {
 	$date_lost = $_POST["date_lost"];
 	$user_id = $_SESSION["user_id"];
 
-	//echo $item_name . '<br>';
-	//echo $category . '<br>';
-	//echo $item_value . '<br>';
-	//echo $date_lost . '<br>';
-	//exit();
-
-
 	require_once 'dbh.inc.php';
 	require_once 'functions.inc.php';
+
 
 	createItem($conn,$item_name,$category,$item_value,$date_lost,$user_id);
 
