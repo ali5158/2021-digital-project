@@ -212,10 +212,22 @@ function archiveItem($conn,$action,$item) {
 	exit();
 }
 
-function editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id) {
+function editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id,$action) {
 
-	$sql = "UPDATE `items` SET item_name = " . $item_name . ", date_lost = " . $date_lost .", category_id = " . $category . ", item_value = " . $item_value . " WHERE `item_id` = " . $item_id;
-	$sql = "UPDATE `items` SET item_name = ?, date_lost = ?, category_id = ?,item_value = ? WHERE `item_id` = ?";
+	$archived = 0;
+
+	if ($action === "found") {
+		$sql = "UPDATE `items` SET item_name = ?, date_lost = ?, category_id = ?, item_value = ?, is_archived = ?  WHERE `item_id` = ?";
+	}
+
+	elseif ($action === "archive") {
+		$sql = "UPDATE `items` SET item_name = ?, date_lost = ?, category_id = ?, item_value = ?, is_found = ?  WHERE `item_id` = ?";
+	}
+
+	else {
+		$sql = "UPDATE `items` SET item_name = ?, date_lost = ?, category_id = ?, item_value = ? WHERE `item_id` = ?";
+	}
+
 	echo "Item Name " . $item_name . "<br>";
 	echo "Date Lost " . $date_lost . "<br>";
 	echo "Category ID " . $category . "<br>";
@@ -228,11 +240,16 @@ function editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id) {
 		header("location: ../edit.php?error=statementfailed");
 		exit();
 	}
+	if ($action === "found" || $action === "archive") {
+		mysqli_stmt_bind_param($stmt,"ssssis",$item_name,$date_lost,$category,$item_value,$archived,$item_id);
+	}
 
-	mysqli_stmt_bind_param($stmt,"sssss",$item_name,$date_lost,$category,$item_value,$item_id);
+	else {
+		mysqli_stmt_bind_param($stmt,"sssss",$item_name,$date_lost,$category,$item_value,$item_id);		
+	}
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
-	header("location: ../edit.php?error=none");
+	header("location: ../profile.php?error=none");
 	exit();
 
 }

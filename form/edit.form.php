@@ -10,15 +10,16 @@ if(isset($_POST["submit"])) {
 	$item_value = $_POST["item_value"];
 	$date_lost = $_POST["date_lost"];
 	$item_id = $_POST["item_id"];
+	$action = $_POST["action"];
 
 	require_once '../includes/dbh.inc.php';
 	require_once '../includes/functions.inc.php';
 
 
-	editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id);
+	editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id,$action);
 
 }
 else {
-	header("location: ../upload.php");
+	header("location: ../profile.php");
 	exit();
 }

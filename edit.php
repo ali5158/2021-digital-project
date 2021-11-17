@@ -4,7 +4,7 @@ include_once 'includes/header.php';
 include_once 'includes/login-check.php';
 include 'includes/dbh.inc.php';
 //Get item_id from the URL
-	$item_id = $_GET["item_id"];
+	$item_id = $_POST["item"];
 
 //SQL and Query for item_id passed in through URL
 $sql = "SELECT * FROM `items` WHERE `item_id` = " . $item_id;
@@ -42,7 +42,7 @@ $all_categories = mysqli_query($conn,$sql);
     </select>
   </div>
 
-  <div class="inputlabel">
+  <div class= "inputlabel">
    <label for = "itemvalue">Value</label>
    <input type = "text" name= "item_value" placeholder= "Item Value" value = "<?php echo $row['item_value']; ?>">
   </div>
@@ -52,6 +52,14 @@ $all_categories = mysqli_query($conn,$sql);
   	<input type = "date" value="<?php echo $row['date_lost']; ?>" name = "date_lost">
   </div>
 
+  <div class = "inputlabel">
+    <label for = "action">Action</label>
+    <select name = "action">
+        <option value = "none">None</option>
+        <option value = "found">Mark as found</option>
+        <option value = "archive">Archive</option>
+    </select>
+  </div>
 
   <input type = "submit" name = "submit" value = "Confirm">
 </form>

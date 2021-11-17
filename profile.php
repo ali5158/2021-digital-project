@@ -40,7 +40,7 @@
 <h2>Edit an item</h2>
 
   <div class = "inputlabel">
-    <form action = "includes/profile.inc.php" method = "post">
+    <form action = "edit.php" method = "post">
     <label for = "item">My Items</label>
     <select name = "item">
         <?php while($category = mysqli_fetch_array($all_items,MYSQLI_ASSOC)): ?>
@@ -48,14 +48,7 @@
                 <?php echo $category['item_id'] . ' | ' . $category["item_name"]; ?>
             </option>
         <?php endwhile; ?>
-    </select>
-    <label for = "action">Action</label>
-    <select name = "action">
-      <option value = "found">Mark as found</option>
-      <option value = "archived">Archive</option>
-      <option value = "edit">Edit</option>
-    </select>
-    <input type = "submit" name = "submit" value = "submit">
+    <input type = "submit" name = "submit" value = "Edit">
     </form>
   </div>
 
