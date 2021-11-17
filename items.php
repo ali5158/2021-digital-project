@@ -13,21 +13,16 @@
 
 <h2>Search for an item</h2>
 <div class = "item-search-form">
-	<form action= "includes/items.inc.php" method= "post">
+ <form action= "items_result.php" method= "post">
 
 	<div class= "inputlabel">
-   		<label for = "search">Item names</label>
-    	<input type = "text" name = "search" placeholder = "search">
+   		<label for = "search">Item name</label>
+    	<input type = "text" name = "item_name" placeholder = "Search">
     </div>
 
   <div class = "inputlabel">
-  	<label for = "date_lost">Date Lost</label>
-  	<input type = "date" name = "date_lost">
-  </div>
-
-  <div class = "inputlabel">
     <label for = "item">Category</label>
-    <select name = "item">
+    <select name = "category">
         <?php while($category = mysqli_fetch_array($all_categories,MYSQLI_ASSOC)): ?>
             <option value="<?php echo $category["category_id"]; ?>">
                 <?php echo $category["category_name"]; ?>
@@ -40,7 +35,12 @@
    <label for = "itemvalue">Value</label>
    <input type = "text" name= "item_value" placeholder= "Item Value">
   </div>
-    
 
-	</form>
+  <div class = "inputlabel">
+    <label for = "date_lost">Date Lost</label>
+    <input type = "date" name = "date_lost">
+  </div>
+
+  <input type = "submit" name = "submit" value = "Search">
+ </form>
 </div>

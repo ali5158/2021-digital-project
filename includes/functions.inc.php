@@ -212,3 +212,5 @@ function editItem($conn,$action,$item) {
 	header("location: ../profile.php?error=none");
 	exit();
 }
+
+// Search Functions
