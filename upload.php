@@ -38,7 +38,7 @@ $all_categories = mysqli_query($conn,$sql);
 
   <div class = "inputlabel">
   	<label for = "date_lost">Date Lost</label>
-  	<input type = "date" value="<?php  date_default_timezone_set("pacific/auckland"); echo date("d-m-Y"); ?>" name ="date_lost">
+  	<input type = "date" value="<?php  date_default_timezone_set("pacific/auckland"); echo date("d-m-y"); ?>" name ="date_lost">
   </div>
 
 

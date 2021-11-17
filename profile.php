@@ -9,7 +9,7 @@
 
  $user_id = $_SESSION['user_id'];
 ?>
- <h3>Your Lost Items:</h2>
+ <h3>Your Lost Items:</h3>
  <table id="fairtable">
     <tr>
         <td class = "column-header">Item ID </td>
@@ -20,7 +20,7 @@
     </tr>
 
     <?php 
-        $sql = "SELECT items.`item_id`,items.`item_name`,items.`date_lost`,items.`item_value`,category.`category_name` FROM items INNER JOIN category ON category.category_id = items.category_id WHERE items.user_id = " . $user_id;
+        $sql = "SELECT items.`item_id`,items.`item_name`,items.`date_lost`,items.`item_value`,category.`category_name` FROM items INNER JOIN category ON category.category_id = items.category_id WHERE items.user_id = " . $user_id . " AND items.is_archived = '0' AND items.is_found = '0'";
         $all_items = mysqli_query($conn,$sql);
 
         $results = mysqli_query($conn,$sql);
@@ -49,7 +49,12 @@
             </option>
         <?php endwhile; ?>
     </select>
-    <input type = "submit" name = "delete" value = "Mark as found">
+    <label for = "action">Action</label>
+    <select name = "action">
+      <option value = "found">Mark as found</option>
+      <option value = "archived">Archive</option>
+    </select>
+    <input type = "submit" name = "submit" value = "submit">
     </form>
   </div>
 

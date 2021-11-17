@@ -147,15 +147,13 @@ function loginUser($conn,$email,$password) {
 		$_SESSION["user_id"] = $emailexists["user_id"];
 		$_SESSION["user_email"] = $emailexists["user_email"];
 		$_SESSION["user_first_name"] = $emailexists["user_first_name"];
+		$_SESSION["is_admin"] = $emailexists["is_admin"];
 		header("location: ../profile.php");
 		exit();
 	}
 }
 
 // Upload Functions
-
-
-
 function dateCheck($date_lost) {
 	exit();
 }
@@ -177,5 +175,40 @@ function createItem($conn,$item_name,$category,$item_value,$date_lost,$user_id) 
 	mysqli_stmt_close($stmt);
 	header("location: ../upload.php?error=none");
 	exit();
+}
+// Profile Functions
 
+function editItem($conn,$action,$item) {
+
+	$sql = "UPDATE `items` SET `is_" . $action . "` = '1' WHERE `items`.`item_id` = $item";
+	$stmt = mysqli_stmt_init($conn);
+
+	if (!mysqli_stmt_prepare($stmt,$sql)) {
+		header("location: ../profile.php?error=statementfailed");
+		exit();
+	}
+
+	mysqli_stmt_execute($stmt);
+	mysqli_stmt_close($stmt);
+
+	if ($action === "found") {
+		$date_found = date("y-m-d");
+		$sql = "UPDATE `items` SET `date_found` = '" . $date_found . "' WHERE `items`.`item_id` = '" . $item ."'";
+		echo $sql;
+		echo "<br>";
+		echo "Item:" . $item . "<br>";
+		echo "Date Found " . $date_found;
+		$stmt = mysqli_stmt_init($conn);
+
+		if (!mysqli_stmt_prepare($stmt,$sql)) {
+			header("location: ../profile.php?error=statementfailed");
+			exit();
+		}	
+
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+	}
+
+	header("location: ../profile.php?error=none");
+	exit();
 }

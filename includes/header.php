@@ -17,16 +17,24 @@
   					session_start();
 			}
 
+			if (isset($_SESSION["is_admin"])) {
+				if ($_SESSION["is_admin"] === 1) {
+					echo "<a href = 'admin.php'>Admin</a>";
+				}
+			}
+
 			if (isset($_SESSION["user_email"])) {
-				echo "<a href= 'profile.php'>My Items</a>";
-				echo "<a href= 'items.php'>Search</a>";
-				echo "<a href= 'upload.php'>Upload Item</a>";
+				echo "<a href = 'profile.php'>My Items</a>";
+				echo "<a href = 'items.php'>Search</a>";
+				echo "<a href = 'upload.php'>Upload Item</a>";
 				echo "<a href = 'includes/logout.inc.php'>Logout</a>";
 			}
+
 			else {
 				echo "<a href = 'signup.php'>Sign Up</a>";
 				echo "<a href = 'login.php'>Login</a>";
 			}
+
 			?>
 	 </div>
 	</div>
