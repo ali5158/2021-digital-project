@@ -4,7 +4,7 @@ include_once 'includes/header.php';
 include_once 'includes/login-check.php';
 include 'includes/dbh.inc.php';
 //Get item_id from the URL
-$item_id = $_GET["item_id"];
+	$item_id = $_GET["item_id"];
 
 //SQL and Query for item_id passed in through URL
 $sql = "SELECT * FROM `items` WHERE `item_id` = " . $item_id;
@@ -21,8 +21,10 @@ $all_categories = mysqli_query($conn,$sql);
 <link rel="stylesheet" href ="css/form-style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<div class ="upload-form">
- <form action="includes/upload.inc.php" method="post">
+<div class ="edit-form">
+ <form action="form/edit.form.php" method="post">
+
+ <input type = "hidden" name = "item_id" value = "<?php echo $item_id; ?>">
 
   <div class="inputlabel">
    <label for = "itemname">Item Name</label>

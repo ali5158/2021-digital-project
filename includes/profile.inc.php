@@ -11,7 +11,9 @@ if(isset($_POST["submit"])) {
 	require_once 'dbh.inc.php';
 	require_once 'functions.inc.php';
 	if ($action === "edit") {
-		header("location: ../edit.php?item_id=" . $item);
+		echo "<form action='../edit.php' method='post'>";
+		echo "<input type = 'hidden' name = 'item_id' value = '<?php echo $item_id; ?>'>";
+		echo "</form>";
 	}
 
 	else {

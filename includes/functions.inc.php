@@ -1,5 +1,4 @@
 <?php
-
 /* Signup Functions */
 
 
@@ -178,7 +177,7 @@ function createItem($conn,$item_name,$category,$item_value,$date_lost,$user_id) 
 }
 // Profile Functions
 
-function editItem($conn,$action,$item) {
+function archiveItem($conn,$action,$item) {
 
 	$sql = "UPDATE `items` SET `is_" . $action . "` = '1' WHERE `items`.`item_id` = $item";
 	$stmt = mysqli_stmt_init($conn);
@@ -213,4 +212,28 @@ function editItem($conn,$action,$item) {
 	exit();
 }
 
+function editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id) {
+
+	$sql = "UPDATE `items` SET item_name = " . $item_name . ", date_lost = " . $date_lost .", category_id = " . $category . ", item_value = " . $item_value . " WHERE `item_id` = " . $item_id;
+	$sql = "UPDATE `items` SET item_name = ?, date_lost = ?, category_id = ?,item_value = ? WHERE `item_id` = ?";
+	echo "Item Name " . $item_name . "<br>";
+	echo "Date Lost " . $date_lost . "<br>";
+	echo "Category ID " . $category . "<br>";
+	echo "Item Value " . $item_value . "<br>";
+	echo "Item ID: " . $item_id . "<br>";
+	echo "SQL Script ". $sql;
+	$stmt = mysqli_stmt_init($conn);
+
+	if (!mysqli_stmt_prepare($stmt, $sql)) {
+		header("location: ../edit.php?error=statementfailed");
+		exit();
+	}
+
+	mysqli_stmt_bind_param($stmt,"sssss",$item_name,$date_lost,$category,$item_value,$item_id);
+	mysqli_stmt_execute($stmt);
+	mysqli_stmt_close($stmt);
+	header("location: ../edit.php?error=none");
+	exit();
+
+}
 // Search Functions
