@@ -40,7 +40,16 @@
     <label for = "date_lost">Date Lost</label>
     <input type = "date" name = "date_lost">
   </div>
+<?php
+if ($_SESSION["is_admin"] === 1) {
+    echo "<div class = 'inputlabel'>";
+    echo "<label for = 'showall'>Show all</label>";
+    echo "<input type = 'checkbox' name='showall'>";
+    echo "</div>";
+}
 
+?>
   <input type = "submit" name = "submit" value = "Search">
  </form>
 </div>
+

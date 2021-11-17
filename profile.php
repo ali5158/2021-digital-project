@@ -53,6 +53,7 @@
     <select name = "action">
       <option value = "found">Mark as found</option>
       <option value = "archived">Archive</option>
+      <option value = "edit">Edit</option>
     </select>
     <input type = "submit" name = "submit" value = "submit">
     </form>
