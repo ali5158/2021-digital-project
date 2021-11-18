@@ -33,9 +33,9 @@ $all_categories = mysqli_query($conn,$sql);
 
   <div class = "inputlabel">
     <label for = "category">Category</label>
-    <select name = "category">
+    <select name = "category" value = "<?php echo $row['category_id']?>">
         <?php while($category = mysqli_fetch_array($all_categories,MYSQLI_ASSOC)): ?>
-            <option value="<?php echo $row['category_id']; ?>">
+            <option value="<?php echo $category['category_id']; ?>">
                 <?php echo $category["category_name"]; ?>
             </option>
         <?php endwhile; ?>

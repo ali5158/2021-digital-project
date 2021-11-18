@@ -214,43 +214,45 @@ function archiveItem($conn,$action,$item) {
 
 function editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id,$action) {
 
-	$archived = 0;
+	$true = 1;
+
+	$sql = "UPDATE `items` SET `item_name` = ?, `date_lost` = ?, `category_id` = ?, `item_value` = ?";
 
 	if ($action === "found") {
-		$sql = "UPDATE `items` SET item_name = ?, date_lost = ?, category_id = ?, item_value = ?, is_archived = ?  WHERE `item_id` = ?";
+	$sql .= ", `is_found` = ?";
 	}
 
 	elseif ($action === "archive") {
-		$sql = "UPDATE `items` SET item_name = ?, date_lost = ?, category_id = ?, item_value = ?, is_found = ?  WHERE `item_id` = ?";
+	$sql .= ", `is_archived` = ?";
 	}
 
-	else {
-		$sql = "UPDATE `items` SET item_name = ?, date_lost = ?, category_id = ?, item_value = ? WHERE `item_id` = ?";
-	}
-
-	echo "Item Name " . $item_name . "<br>";
-	echo "Date Lost " . $date_lost . "<br>";
-	echo "Category ID " . $category . "<br>";
-	echo "Item Value " . $item_value . "<br>";
-	echo "Item ID: " . $item_id . "<br>";
-	echo "SQL Script ". $sql;
+	$sql .= " WHERE `item_id` = ?;";
 	$stmt = mysqli_stmt_init($conn);
 
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
-		header("location: ../edit.php?error=statementfailed");
+		echo $sql;
+		//header("location: ../upload.php?error=statementfailed");
 		exit();
 	}
+
 	if ($action === "found" || $action === "archive") {
-		mysqli_stmt_bind_param($stmt,"ssssis",$item_name,$date_lost,$category,$item_value,$archived,$item_id);
+		echo "With Action:" . $sql;
+		mysqli_stmt_bind_param($stmt,"ssssss",$item_name,$date_lost,$category,$item_value,$true,$item_id);
 	}
 
 	else {
-		mysqli_stmt_bind_param($stmt,"sssss",$item_name,$date_lost,$category,$item_value,$item_id);		
+		echo "Without Action: " . $sql;
+		mysqli_stmt_bind_param($stmt,"sssss",$item_name,$date_lost,$category,$item_value,$item_id);
 	}
+
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
 	header("location: ../profile.php?error=none");
 	exit();
+
+
+
+
 
 }
 // Search Functions
