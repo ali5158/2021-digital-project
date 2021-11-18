@@ -47,7 +47,6 @@ if ($_SESSION["is_admin"] === 1) {
     echo "<input type = 'checkbox' name='showall'>";
     echo "</div>";
 }
-
 ?>
   <input type = "submit" name = "submit" value = "Search">
  </form>

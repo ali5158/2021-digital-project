@@ -23,11 +23,7 @@ if (empty($item_name) && !isset($_POST["showall"])) {
 }
 
 //Constructing SQL statement
- if (isset($_POST["showall"])) {
-  $sql = 'SELECT * FROM `items` INNER JOIN category ON category.category_id = items.category_id';
- }
- else {
- $sql = 'SELECT * FROM `items` INNER JOIN category ON category.category_id = items.category_id WHERE `item_name` LIKE "' . $item_name . '" ';
+  $sql = 'SELECT * FROM `items` INNER JOIN category ON category.category_id = items.category_id WHERE `item_name` LIKE "%'  . $item_name . '%" ';
 
  if (!empty($category)) {
   $sql .= "AND items.`category_id` = " . $category . " ";
@@ -41,7 +37,10 @@ if (empty($item_name) && !isset($_POST["showall"])) {
   $sql .= 'AND `date_lost` = "' . $date_lost . '" ';
  }
 $sql .= "AND is_archived = 0 AND is_found = 0";
-}
+
+ if (isset($_POST["showall"])) {
+  $sql = 'SELECT * FROM `items` INNER JOIN category ON category.category_id = items.category_id';
+ }
 ?>
 
 <link rel="stylesheet" href ="css/table.css">
@@ -70,3 +69,24 @@ $sql .= "AND is_archived = 0 AND is_found = 0";
             }
     ?>
 </table>
+<?php
+  if ($_SESSION["is_admin"] !== 1) {
+    $sql .= " AND user_id = " . $user_id . ";";
+  }
+  echo $sql;
+  $items = mysqli_query($conn,$sql)
+?>
+<h2>Edit an item</h2>
+  <div class = "inputlabel">
+    <form action = "edit.php" method = "post">
+    <label for = "item">My Items</label>
+    <select name = "item">
+        <?php while($category = mysqli_fetch_array($items,MYSQLI_ASSOC)): ?>
+            <option value="<?php echo $category["item_id"]; ?>">
+                <?php echo $category['item_id'] . ' | ' . $category['item_name']; ?>
+            </option>
+        <?php endwhile; ?>
+    <input type = "submit" name = "submit" value = "Edit">
+    </form>
+  </div>
+
