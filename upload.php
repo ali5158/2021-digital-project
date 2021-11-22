@@ -62,15 +62,6 @@ include 'includes/dbh.inc.php';
     </select>
   </div>
 
-  <div class = "inputlabel">
-    <label for ="itemtype">Lost or Found?</label>
-    <select name = "itemtype">
-    <option value = >
-
-    </select>
-  </div>
-
-
   <input type = "submit" name = "submit" value = "Upload">
 </form>
 
