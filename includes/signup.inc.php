@@ -23,11 +23,7 @@
  }
 
  if (passwordMatch($password,$passwordrepeat) !== false) {
-    echo $password;
-    echo '<br>';
-    echo $passwordrepeat;
-
-    //header("location: ../signup.php?error=passwordsdontmatchs");
+    header("location: ../signup.php?error=passwordsdontmatch");
     exit();
  }
 

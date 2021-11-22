@@ -7,7 +7,7 @@
  include_once 'includes/dbh.inc.php';
  include_once 'includes/login-check.php';
 
- $sql = "SELECT * FROM `category`";
+ $sql = "SELECT * FROM `category` ORDER BY `category`.`category_name` ASC;";
  $all_categories = mysqli_query($conn,$sql);
 ?>
 
@@ -16,12 +16,12 @@
  <form action= "items_result.php" method= "post">
 
 	<div class= "inputlabel">
-   		<label for = "search">Item name</label>
+   		<label for = "search">*Item name</label>
     	<input type = "text" name = "item_name" placeholder = "Search">
     </div>
 
   <div class = "inputlabel">
-    <label for = "item">Category</label>
+    <label for = "item">*Category</label>
     <select name = "category">
         <?php while($category = mysqli_fetch_array($all_categories,MYSQLI_ASSOC)): ?>
             <option value="<?php echo $category["category_id"]; ?>">
@@ -32,7 +32,12 @@
   </div>
 
   <div class="inputlabel">
-   <label for = "itemvalue">Value</label>
+   <label for = "itemvalue">Value ($)</label>
+   <select name = "valueoperator" class = "prefix">
+    <option value = "<"><</option>
+    <option value = "=">=</option>
+    <option value = ">">></option>
+   </select>
    <input type = "text" name= "item_value" placeholder= "Item Value">
   </div>
 
@@ -50,5 +55,18 @@ if ($_SESSION["is_admin"] === 1) {
 ?>
   <input type = "submit" name = "submit" value = "Search">
  </form>
+ <h4> * Indicates required field </h4>
 </div>
 
+<?php
+if (isset($_GET["error"])) {
+
+    if ($_GET["error"] == "emptyinput") {
+        echo "<div class='isa_error'>" . "<i class='fa fa-times-circle'></i>Fill all input fields" . "</div>";
+    }
+
+    if ($_GET["error"] == "invalidvalue") {
+        echo "<div class='isa_error'>" . "<i class='fa fa-times-circle'></i>Use '=','<' or '>' before the value" . "</div>";
+    }
+}
+?>

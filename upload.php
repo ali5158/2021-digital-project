@@ -3,8 +3,6 @@
 include_once 'includes/header.php';
 include_once 'includes/login-check.php';
 include 'includes/dbh.inc.php';
-$sql = "SELECT * FROM `category` ";
-$all_categories = mysqli_query($conn,$sql);
 ?>
 
 <h2>Upload an Item</h2>
@@ -23,7 +21,10 @@ $all_categories = mysqli_query($conn,$sql);
   <div class = "inputlabel">
     <label for = "category">Category</label>
     <select name = "category">
-        <?php while($category = mysqli_fetch_array($all_categories,MYSQLI_ASSOC)): ?>
+        <?php 
+        $sql = "SELECT * FROM `category` ";
+        $all_categories = mysqli_query($conn,$sql);
+        while($category = mysqli_fetch_array($all_categories,MYSQLI_ASSOC)): ?>
             <option value="<?php echo $category["category_id"]; ?>">
                 <?php echo $category["category_name"]; ?>
             </option>
@@ -32,13 +33,41 @@ $all_categories = mysqli_query($conn,$sql);
   </div>
 
   <div class="inputlabel">
-   <label for = "itemvalue">Value</label>
-   <input type = "text" name= "item_value" placeholder= "Item Value">
+    <label for = "itemvalue" class = "w30">Value</label>
+    <select name = "category" class = "w20">
+            <option value="<"><</option>
+            <option value="=">=</option>
+            <option value=">">></option>
+            </option>
+    </select>
+    <input type = "text" name= "item_value" placeholder= "Item Value" class = "w40">
   </div>
 
   <div class = "inputlabel">
   	<label for = "date_lost">Date Lost</label>
   	<input type = "date" value="<?php  date_default_timezone_set("pacific/auckland"); echo date("d-m-y"); ?>" name ="date_lost">
+  </div>
+
+  <div class = "inputlabel">
+    <label for = "location">Location</label>
+    <select name = "location">
+    <?php
+    $sql = "SELECT * FROM `location` ";
+    $all_locations = mysqli_query($conn,$sql);
+    while($location = mysqli_fetch_array($all_locations,MYSQLI_ASSOC)): ?>
+        <option value="<?php echo $location["location_id"]; ?>">
+            <?php echo $location["location_name"]; ?>
+        </option>
+    <?php endwhile; ?>
+    </select>
+  </div>
+
+  <div class = "inputlabel">
+    <label for ="itemtype">Lost or Found?</label>
+    <select name = "itemtype">
+    <option value = >
+
+    </select>
   </div>
 
 

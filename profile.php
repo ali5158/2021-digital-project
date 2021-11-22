@@ -9,7 +9,7 @@
 
  $user_id = $_SESSION['user_id'];
 ?>
- <h3>Your Lost Items:</h3>
+ <h3>Items you've lost</h3>
  <table id="fairtable">
     <tr>
         <td class = "column-header">Item ID </td>
@@ -20,18 +20,47 @@
     </tr>
 
     <?php 
-        $sql = "SELECT items.`item_id`,items.`item_name`,items.`date_lost`,items.`item_value`,category.`category_name` FROM items INNER JOIN category ON category.category_id = items.category_id WHERE items.user_id = " . $user_id . " AND items.is_archived = '0' AND items.is_found = '0'";
-        $all_items = mysqli_query($conn,$sql);
+        $basesql = "SELECT items.`item_id`,items.`item_name`,items.`date_lost`,items.`item_value`,category.`category_name` 
+                        FROM items 
+                            INNER JOIN category ON category.category_id = items.category_id
+                        WHERE items.user_id = " . $user_id;
+        $sql = $basesql . " AND `status_id` = 1";
+        $lost = mysqli_query($conn,$sql);
 
-        $results = mysqli_query($conn,$sql);
 
-        while($rowitem = mysqli_fetch_array($results,MYSQLI_ASSOC)) {
+        while($rowitem = mysqli_fetch_array($lost,MYSQLI_ASSOC)) {
         echo "<tr>";
             echo "<td>" . $rowitem['item_id'] . "</td>";
             echo "<td>" . $rowitem['item_name'] . "</td>";
             echo "<td>" . $rowitem['date_lost'] . "</td>";
             echo "<td>" . $rowitem['item_value'] . "</td>";
-            echo "<td>" . $rowitem['category_name'] . "</td>";
+            echo "<td>" . $rowitem['category_name'] . "</td>"; 
+            echo "</tr>";
+            }
+            ?>
+</table>
+
+<h3>Items you've found</h3>
+<table>
+    <tr>
+        <td class = "column-header">Item ID </td>
+        <td class = "column-header">Item Name</td>
+        <td class = "column-header">Date Lost</td>
+        <td class = "column-header">Item Value</td>
+        <td class = "column-header">Category Name</td>
+    </tr>
+    <?php
+        $sql = $basesql . " AND `status_id` = 2";
+        $found = mysqli_query($conn,$sql);
+
+
+        while($rowitem = mysqli_fetch_array($found,MYSQLI_ASSOC)) {
+        echo "<tr>";
+            echo "<td>" . $rowitem['item_id'] . "</td>";
+            echo "<td>" . $rowitem['item_name'] . "</td>";
+            echo "<td>" . $rowitem['date_lost'] . "</td>";
+            echo "<td>" . $rowitem['item_value'] . "</td>";
+            echo "<td>" . $rowitem['category_name'] . "</td>"; 
             echo "</tr>";
             }
             ?>
@@ -51,4 +80,5 @@
     <input type = "submit" name = "submit" value = "Edit">
     </form>
   </div>
+
 

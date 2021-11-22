@@ -75,11 +75,10 @@ function emailExists($conn,$email) {
 function validateMobileNumber($mobilenumber) {
 	$charactersToReplace = array("-","(",")"," ");
 	$mobilenumber = str_replace($charactersToReplace,"",$mobilenumber);
-	echo $mobilenumber;
 
 	if(strlen($mobilenumber) !== 10) {
 		if(strlen($mobilenumber) !== 11) {
-			//header("location: ../signup.php?error=phonelengthinvalid");
+			header("location: ../signup.php?error=phonelengthinvalid");
 			exit();
 		}
 	}
@@ -214,12 +213,15 @@ function archiveItem($conn,$action,$item) {
 
 function editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id,$action) {
 
+	date_default_timezone_set("Pacific/Auckland");
+	$date_found = date("Y-m-d");
 	$true = 1;
 
 	$sql = "UPDATE `items` SET `item_name` = ?, `date_lost` = ?, `category_id` = ?, `item_value` = ?";
 
 	if ($action === "found") {
 	$sql .= ", `is_found` = ?";
+	$sql .= ", `date_found` = ?";
 	}
 
 	elseif ($action === "archive") {
@@ -231,12 +233,16 @@ function editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id,$ac
 
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
 		echo $sql;
-		//header("location: ../upload.php?error=statementfailed");
+		header("location: ../upload.php?error=statementfailed");
 		exit();
 	}
 
-	if ($action === "found" || $action === "archive") {
+	if ($action === "found") {
 		echo "With Action:" . $sql;
+		mysqli_stmt_bind_param($stmt,"sssssss",$item_name,$date_lost,$category,$item_value,$true,$date_found,$item_id);
+	}
+
+	elseif ($action === "archive") {
 		mysqli_stmt_bind_param($stmt,"ssssss",$item_name,$date_lost,$category,$item_value,$true,$item_id);
 	}
 
@@ -244,6 +250,8 @@ function editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id,$ac
 		echo "Without Action: " . $sql;
 		mysqli_stmt_bind_param($stmt,"sssss",$item_name,$date_lost,$category,$item_value,$item_id);
 	}
+
+	echo $sql;
 
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
@@ -256,3 +264,27 @@ function editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id,$ac
 
 }
 // Search Functions
+
+function validateValue($value,$operator) {
+	if (strpos($value,'<') !== false) {
+		$operator = '<';
+	}
+
+	elseif (strpos($value,'>') !== false ) {
+		$operator = '>';
+	}
+
+	elseif (strpos($value,'=') !== false ) {
+		$operator = "=";
+	}
+
+	elseif (isset($value)) {
+		$operator = "";
+	}
+
+	else {
+		header("location: items.php?error=invalidvalue");
+		exit();
+	}
+
+}
