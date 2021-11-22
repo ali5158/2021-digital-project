@@ -32,14 +32,16 @@
   </div>
 
   <div class="inputlabel">
-   <label for = "itemvalue">Value ($)</label>
-   <select name = "valueoperator" class = "prefix">
-    <option value = "<"><</option>
-    <option value = "=">=</option>
-    <option value = ">">></option>
-   </select>
-   <input type = "text" name= "item_value" placeholder= "Item Value">
+    <label for = "itemvalue">Value</label>
+    <select name = "category" id = "w20">
+            <option value="<"><</option>
+            <option value="=">=</option>
+            <option value=">">></option>
+            </option>
+    </select>
+    <input type = "text" name= "item_value" placeholder= "Item Value" id = "w40">
   </div>
+
 
   <div class = "inputlabel">
     <label for = "date_lost">Date Lost</label>

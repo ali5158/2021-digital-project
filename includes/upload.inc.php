@@ -10,6 +10,8 @@ if(isset($_POST["submit"])) {
 	$item_value = $_POST["item_value"];
 	$date_lost = $_POST["date_lost"];
 	$user_id = $_SESSION["user_id"];
+	$item_type = $_POST["item_type"];
+	$location = $_POST["location"]
 
 	require_once 'dbh.inc.php';
 	require_once 'functions.inc.php';

@@ -33,24 +33,39 @@ include 'includes/dbh.inc.php';
   </div>
 
   <div class="inputlabel">
-    <label for = "itemvalue" class = "w30">Value</label>
-    <select name = "category" class = "w20">
+    <label for = "itemvalue">Value</label>
+    <select name = "category" id = "w20">
             <option value="<"><</option>
             <option value="=">=</option>
             <option value=">">></option>
             </option>
     </select>
-    <input type = "text" name= "item_value" placeholder= "Item Value" class = "w40">
+    <input type = "text" name= "item_value" placeholder= "Item Value" id = "w40">
   </div>
 
   <div class = "inputlabel">
   	<label for = "date_lost">Date Lost</label>
   	<input type = "date" value="<?php  date_default_timezone_set("pacific/auckland"); echo date("d-m-y"); ?>" name ="date_lost">
   </div>
+  <?php
+  if (isset($_GET["type"])) {
+    if ($_GET["type"] == "found") {
+        echo "<div>";
+        echo "<input type = 'hidden' value = 'found' name='item_type'>";
+    }
+    else {
+        echo "<div style = 'display: none;'>";
+        echo "<input type = 'hidden' value = 'lost' name='item_type'>";
+    }
+  } 
 
-  <div class = "inputlabel">
+  else {
+    header("location: profile.php");
+  }
+  ?>
     <label for = "location">Location</label>
     <select name = "location">
+    ?>
     <?php
     $sql = "SELECT * FROM `location` ";
     $all_locations = mysqli_query($conn,$sql);

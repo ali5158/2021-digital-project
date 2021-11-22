@@ -211,21 +211,16 @@ function archiveItem($conn,$action,$item) {
 	exit();
 }
 
-function editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id,$action) {
+function editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id,$status_id,$location_id) {
 
 	date_default_timezone_set("Pacific/Auckland");
 	$date_found = date("Y-m-d");
 	$true = 1;
 
-	$sql = "UPDATE `items` SET `item_name` = ?, `date_lost` = ?, `category_id` = ?, `item_value` = ?";
+	$sql = "UPDATE `items` SET `item_name` = ?, `date_lost` = ?, `category_id` = ?, `item_value` = ?, `location_id` = ?, `status_id` = ?";
 
-	if ($action === "found") {
-	$sql .= ", `is_found` = ?";
+	if ($status_id == "3") {
 	$sql .= ", `date_found` = ?";
-	}
-
-	elseif ($action === "archive") {
-	$sql .= ", `is_archived` = ?";
 	}
 
 	$sql .= " WHERE `item_id` = ?;";
@@ -237,21 +232,14 @@ function editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id,$ac
 		exit();
 	}
 
-	if ($action === "found") {
+	if ($status_id == "3" || $status_id == "4") {
 		echo "With Action:" . $sql;
-		mysqli_stmt_bind_param($stmt,"sssssss",$item_name,$date_lost,$category,$item_value,$true,$date_found,$item_id);
+		mysqli_stmt_bind_param($stmt,"ssssssss",$item_name,$date_lost,$category,$item_value,$location_id,$status_id,$date_found,$item_id);
 	}
 
-	elseif ($action === "archive") {
-		mysqli_stmt_bind_param($stmt,"ssssss",$item_name,$date_lost,$category,$item_value,$true,$item_id);
+	else  {
+		mysqli_stmt_bind_param($stmt,"sssssss",$item_name,$date_lost,$category,$item_value,$location_id,$status_id,$item_id);
 	}
-
-	else {
-		echo "Without Action: " . $sql;
-		mysqli_stmt_bind_param($stmt,"sssss",$item_name,$date_lost,$category,$item_value,$item_id);
-	}
-
-	echo $sql;
 
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);

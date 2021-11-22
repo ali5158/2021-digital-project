@@ -10,6 +10,8 @@ include 'includes/dbh.inc.php';
 $sql = "SELECT * FROM `items` WHERE `item_id` = " . $item_id;
 $result = mysqli_query($conn,$sql);
 $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+$category = $row["category_id"];
+$location = $row["location_id"];
 
 //SQL and Query for the category dropdown box
 $sql = "SELECT * FROM `category` ";
@@ -33,8 +35,11 @@ $all_categories = mysqli_query($conn,$sql);
 
   <div class = "inputlabel">
     <label for = "category">Category</label>
-    <select name = "category" value = "<?php echo $row['category_id']?>">
-        <?php while($category = mysqli_fetch_array($all_categories,MYSQLI_ASSOC)): ?>
+    <select name = "category">
+        <option value = "">Select...</option>
+        <?php while($category = mysqli_fetch_array($all_categories,MYSQLI_ASSOC)): 
+
+            ?>
             <option value="<?php echo $category['category_id']; ?>">
                 <?php echo $category["category_name"]; ?>
             </option>
@@ -53,11 +58,34 @@ $all_categories = mysqli_query($conn,$sql);
   </div>
 
   <div class = "inputlabel">
-    <label for = "action">Action</label>
-    <select name = "action">
-        <option value = "none">None</option>
-        <option value = "found">Mark as found</option>
-        <option value = "archive">Archive</option>
+    <label for = "status">Action</label>
+    <select name = "status">
+        <option value = "">Select...</option>
+        <?php 
+        $sql = "SELECT * FROM `status` WHERE is_active = 1;";
+        $all_status = mysqli_query($conn,$sql);
+
+        while($status = mysqli_fetch_array($all_status,MYSQLI_ASSOC)): ?>
+            <option value="<?php echo $status['status_id']; ?>">
+                <?php echo $status["status_name"]; ?>
+            </option>
+        <?php endwhile; ?>
+    </select>
+  </div>
+
+  <div class = "inputlabel">
+    <label for = "location_id">Location</label>
+    <select name = "location_id">
+        <option value = "">Select...</option>
+        <?php 
+        $sql = "SELECT * FROM `location` WHERE is_active = 1;";
+        $all_locations = mysqli_query($conn,$sql);
+
+        while($location = mysqli_fetch_array($all_locations,MYSQLI_ASSOC)): ?>
+            <option value="<?php echo $location['location_id']; ?>">
+                <?php echo $location["location_name"]; ?>
+            </option>
+        <?php endwhile; ?>
     </select>
   </div>
 

@@ -10,13 +10,14 @@ if(isset($_POST["submit"])) {
 	$item_value = $_POST["item_value"];
 	$date_lost = $_POST["date_lost"];
 	$item_id = $_POST["item_id"];
-	$action = $_POST["action"];
+	$status = $_POST["status"];
+	$location_id = $_POST["location_id"];
 
 	require_once '../includes/dbh.inc.php';
 	require_once '../includes/functions.inc.php';
 
 
-	editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id,$action);
+	editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id,$status,$location_id);
 
 }
 else {
