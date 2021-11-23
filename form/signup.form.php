@@ -8,8 +8,8 @@
  	$password = $_POST["password"];
  	$passwordrepeat = $_POST["passwordrepeat"];
 
- 	require_once 'dbh.inc.php';
- 	require_once 'functions.inc.php';
+   require_once '../includes/dbh.inc.php';
+   require_once '../includes/functions.inc.php';
  }
 
  if (emptyInputSignup($firstname,$lastname,$email,$mobilenumber,$password,$passwordrepeat !== false)) {

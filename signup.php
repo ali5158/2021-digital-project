@@ -12,7 +12,7 @@
 
   <!-- Signup form for users. Redirects to signup.form.php --> 
 <div class = "signup-form">
- <form action="includes/signup.inc.php" method="post">
+ <form action="form/signup.form.php" method="post">
 
   <!-- First Name Input --> 
   <div class="inputlabel">

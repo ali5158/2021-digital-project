@@ -160,11 +160,6 @@ function loginUser($conn,$email,$password) {
 
 
 // Upload Functions
-function dateCheck($date_lost) {
-	exit();
-}
-
-
 
 function createItem($conn,$item_name,$category,$item_value,$date_lost,$user_id,$item_type,$location) {
   $sql = "INSERT INTO items (item_name,date_lost,category_id,item_value,user_id,status_id,location_id) VALUES (?,?,?,?,?,?,?);";
@@ -237,6 +232,14 @@ function editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id,$st
 
 // Search Functions
 
+function dateCheck($date,$headerlocation) {
+  if ($date > $today) {
+    header("location: " . $headerlocation);
+    exit();
+  }
+} 
+
+
 function validateValue($value,$operator) {
   if (strpos($value,'<') !== false) {
 	$operator = '<';
@@ -250,13 +253,7 @@ function validateValue($value,$operator) {
 	$operator = "=";
   }
 
-  elseif (isset($value)) {
+  elseif (!isset($value)) {
 	$operator = "";
   }
-
-  else {
-	header("location: items.php?error=invalidvalue");
-	exit();
-  }
-
 }

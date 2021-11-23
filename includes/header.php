@@ -23,7 +23,7 @@
 			  if ($_SESSION["is_admin"] === 1) {
 			    echo "<li><a href = '#'>Admin</a>";
 				echo   "<ul>";
-				echo     "<li><a href = 'items_result.php?type=allitems'>View all items</a></li>";
+				echo     "<li><a href = 'search_result.php?type=allitems'>View all items</a></li>";
 				echo     "<li><a href = 'admin.php'>View Reports</a></li>";
 				echo   "</ul>";
 				echo "</li>";
@@ -32,7 +32,7 @@
 
 			if (isset($_SESSION["user_email"])) {
 				echo "<li><a href = 'profile.php'>My Items</a></li>";
-				echo "<li><a href = 'items.php'>Search</a></li>";
+				echo "<li><a href = 'search.php'>Search</a></li>";
 
 				echo "<li><a href = '#'>Upload Item</a>";
 				echo   "<ul>";

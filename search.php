@@ -13,7 +13,7 @@
 
 <h2>Search for an item</h2>
 <div class = "item-search-form">
- <form action= "items_result.php" method= "post">
+ <form action= "search_result.php" method= "post">
 
 	<div class= "inputlabel">
    		<label for = "search">*Item name</label>
@@ -32,11 +32,11 @@
   </div>
 
   <div class="inputlabel">
-    <label for = "itemvalue">Value</label>
+    <label for = "operatortype">Value</label>
     <br>
-    <select name = "category" id = "w20">
-            <option value="<"><</option>
+    <select name = "operatortype" id = "w20">
             <option value="=">=</option>
+            <option value="<"><</option>
             <option value=">">></option>
             </option>
     </select>
@@ -58,11 +58,10 @@
 if (isset($_GET["error"])) {
 
     if ($_GET["error"] == "emptyinput") {
-        echo "<div class='isa_error'>" . "<i class='fa fa-times-circle'></i>Fill all input fields" . "</div>";
+        echo "<div class='isa_error'>" . "<i class='fa fa-times-circle'></i>Fill search term field" . "</div>";
     }
-
-    if ($_GET["error"] == "invalidvalue") {
-        echo "<div class='isa_error'>" . "<i class='fa fa-times-circle'></i>Use '=','<' or '>' before the value" . "</div>";
+    if ($_GET["error"] == "dateinvalid") {
+        echo "<div class='isa_error'>" . "<i class='fa fa-times-circle'></i>Date lost is greater than todays date" . "</div>";
     }
 }
 ?>

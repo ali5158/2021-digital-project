@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <div class = "signup-form">
- <form action="includes/login.inc.php" method="post">
+ <form action="form/login.form.php" method="post">
 
   <div class="inputlabel">
    <label for = "emailaddress">Email</label>

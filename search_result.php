@@ -14,6 +14,7 @@ if(isset($_POST["submit"])) {
   $item_name = $_POST["item_name"];
   $category = $_POST["category"];
   $item_value = $_POST["item_value"];
+  $value_operator = $_POST["operatortype"];
   $date_lost = $_POST["date_lost"];
   $user_id = $_SESSION["user_id"];
 }
@@ -25,15 +26,19 @@ if (empty($item_name) && !isset($_GET['type']) && $_SESSION["is_admin"] != 1) {
   exit();
 }
 
+//Ensure the $item_name variable is set
+dateCheck($date_lost,'search.php?error=dateinvalid');
+
 if (empty($item_name)) {
-  $sql = '';
+  header("location: search.php?error=emptyinput");
 }
+
 else {
 $sql = 'SELECT * 
         FROM `items` 
             INNER JOIN category 
                 ON category.category_id = items.category_id 
-        WHERE `item_name` LIKE "%'  . $item_name . '%" AND items.category_id = " . $category . " ';  
+        WHERE `item_name` LIKE "%'  . $item_name . '%" AND items.category_id = ' . $category . ' ';  
 }
 
 
@@ -42,21 +47,19 @@ $sql = 'SELECT *
 
  if (!empty($item_value)) {
   //Find out what type of operator was used in the value field
-  $value_operator = "";
-  validateValue($item_value,$value_operator);
-  $sql .= "AND `item_value` " . $value_operator . $item_value . " ";
+  $sql .= "AND `item_value` " . $value_operator . " " . $item_value . " ";
  }
 
  if (!empty($date_lost)) {
   $sql .= 'AND `date_lost` = "' . $date_lost . '" ';
  }
-//Adds flags to make sure that the item is currently 'lost'
-$sql .= "AND is_archived = 0 AND is_found = 0";
 
 //Changes SQL statement to return all items from the items database
+if (isset($_GET['type'])) {
  if ($_GET['type'] == 'allitems' && $_SESSION["is_admin"] == 1 ) {
   $sql = 'SELECT * FROM `items` INNER JOIN category ON category.category_id = items.category_id';
  }
+}
 
 
 ?>

@@ -69,16 +69,20 @@ include 'includes/dbh.inc.php';
         </option>
     <?php endwhile; ?>
     </select>
-  </div>
 
   <input type = "submit" name = "submit" value = "Upload">
 </form>
+</div>
 
 <?php 
 if (isset($_GET["error"])) {
 
     if ($_GET["error"] == "emptyinput") {
         echo "<div class='isa_error'>" . "<i class='fa fa-times-circle'></i>Fill all input fields" . "</div>";
+    }
+
+    if ($_GET["error"] == "dateinvalid") {
+        echo "<div class='isa_error'>" . "<i class='fa fa-times-circle'></i>Date lost is greater than todays date" . "</div>";
     }
 
     else if ($_GET["error"] == "none") {

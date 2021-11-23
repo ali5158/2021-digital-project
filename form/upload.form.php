@@ -26,7 +26,7 @@ if(isset($_POST["submit"])) {
 
 	require_once '../includes/dbh.inc.php';
 	require_once '../includes/functions.inc.php';
-
+  dateCheck($date_lost,'../upload.php?error=dateinvalid');
   createItem($conn,$item_name,$category,$item_value,$date_lost,$user_id,$item_type,$location);
 }
 
