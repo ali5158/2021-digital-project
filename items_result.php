@@ -20,13 +20,21 @@ if(isset($_POST["submit"])) {
 
 // Make sure that the search field isnt left empty
 // unless the showall box has been ticked.
-if (empty($item_name) && !isset($_POST["showall"])) {
+if (empty($item_name) && !isset($_GET['type']) && $_SESSION["is_admin"] != 1) {
   header("location: items.php?error=emptyfield");
   exit();
 }
 
-// Initial SQL statement
-$sql = 'SELECT * FROM `items` INNER JOIN category ON category.category_id = items.category_id WHERE `item_name` LIKE "%'  . $item_name . '%" AND items.category_id = " . $category . " ';
+if (empty($item_name)) {
+  $sql = '';
+}
+else {
+$sql = 'SELECT * 
+        FROM `items` 
+            INNER JOIN category 
+                ON category.category_id = items.category_id 
+        WHERE `item_name` LIKE "%'  . $item_name . '%" AND items.category_id = " . $category . " ';  
+}
 
 
 // These if statements add onto the initial SQL statement
@@ -46,7 +54,7 @@ $sql = 'SELECT * FROM `items` INNER JOIN category ON category.category_id = item
 $sql .= "AND is_archived = 0 AND is_found = 0";
 
 //Changes SQL statement to return all items from the items database
- if (isset($_POST["showall"])) {
+ if ($_GET['type'] == 'allitems' && $_SESSION["is_admin"] == 1 ) {
   $sql = 'SELECT * FROM `items` INNER JOIN category ON category.category_id = items.category_id';
  }
 
@@ -57,9 +65,18 @@ $sql .= "AND is_archived = 0 AND is_found = 0";
 <link rel="stylesheet" href ="css/form-style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<h2>Search Results</h2>
+<?php
+if (isset($_GET['type']) && $_GET['type'] == 'allitems') {
+  echo '<h2>All Items</h2>';
+}
+else {
+  echo '<h2>Search Results</h2>';
+}
+?>
+
 <table>
   <tr>
+    <!-- Define the column headers-->
     <td class = "column-header">Item ID </td>
     <td class = "column-header">Item Name</td>
     <td class = "column-header">Date Lost</td>
@@ -68,16 +85,16 @@ $sql .= "AND is_archived = 0 AND is_found = 0";
   </tr>
 
     <?php
-        $results = mysqli_query($conn,$sql);
-        while($rowitem = mysqli_fetch_array($results,MYSQLI_ASSOC)) {
+      $results = mysqli_query($conn,$sql);
+      while($rowitem = mysqli_fetch_array($results,MYSQLI_ASSOC)) {
         echo "<tr>";
-            echo "<td>" . $rowitem['item_id'] . "</td>";
-            echo "<td>" . $rowitem['item_name'] . "</td>";
-            echo "<td>" . $rowitem['date_lost'] . "</td>";
-            echo "<td>" . $rowitem['item_value'] . "</td>";
-            echo "<td>" . $rowitem['category_name'] . "</td>";
-            echo "</tr>";
-            }
+        echo "<td>" . $rowitem['item_id'] . "</td>";
+        echo "<td>" . $rowitem['item_name'] . "</td>";
+        echo "<td>" . $rowitem['date_lost'] . "</td>";
+        echo "<td>" . $rowitem['item_value'] . "</td>";
+        echo "<td>" . $rowitem['category_name'] . "</td>";
+        echo "</tr>";
+        }
     ?>
 </table>
 <?php
@@ -88,20 +105,27 @@ $sql .= "AND is_archived = 0 AND is_found = 0";
   $users = mysqli_query($conn,$sql);
 ?>
 
+<!-- People can select items from the returned SQL statement that they
+     have uploaded to edit. If you are an admin you can edit any item. -->
 <h2>Edit an item</h2>
   <div class = "inputlabel">
     <form action = "edit.php" method = "post">
     <label for = "item">My Items</label>
     <select name = "item">
-        <?php while($category = mysqli_fetch_array($items,MYSQLI_ASSOC)): ?>
-            <option value="<?php echo $category["item_id"]; ?>">
-                <?php echo $category['item_id'] . ' | ' . $category['item_name']; ?>
-            </option>
+        <?php 
+          // Loop through array and make into values for dropdown box
+          while($category = mysqli_fetch_array($items,MYSQLI_ASSOC)): ?>
+          <option value="<?php echo $category["item_id"]; ?>">
+            <?php echo $category['item_id'] . ' | ' . $category['item_name']; ?>
+          </option>
         <?php endwhile; ?>
+    <!-- Submit Button -->
     <input type = "submit" name = "submit" value = "Edit">
     </form>
   </div>
 
+<!-- This is used so that people can find contact information for the person
+     that uploaded a missing item so that they can be reunited with it. -->
 
 <h2>Contact a user</h2>
 <div class = "inputlabel">

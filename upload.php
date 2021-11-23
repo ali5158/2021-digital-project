@@ -11,7 +11,7 @@ include 'includes/dbh.inc.php';
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <div class ="upload-form">
- <form action="includes/upload.inc.php" method="post">
+ <form action="form/upload.form.php" method="post">
 
   <div class="inputlabel">
    <label for = "itemname">Item Name</label>
@@ -34,35 +34,29 @@ include 'includes/dbh.inc.php';
 
   <div class="inputlabel">
     <label for = "itemvalue">Value</label>
-    <select name = "category" id = "w20">
-            <option value="<"><</option>
-            <option value="=">=</option>
-            <option value=">">></option>
-            </option>
-    </select>
-    <input type = "text" name= "item_value" placeholder= "Item Value" id = "w40">
+    <input type = "text" name= "item_value" placeholder= "Item Value">
   </div>
 
   <div class = "inputlabel">
   	<label for = "date_lost">Date Lost</label>
   	<input type = "date" value="<?php  date_default_timezone_set("pacific/auckland"); echo date("d-m-y"); ?>" name ="date_lost">
   </div>
-  <?php
+<?php
   if (isset($_GET["type"])) {
+
     if ($_GET["type"] == "found") {
         echo "<div>";
         echo "<input type = 'hidden' value = 'found' name='item_type'>";
     }
+
     else {
         echo "<div style = 'display: none;'>";
         echo "<input type = 'hidden' value = 'lost' name='item_type'>";
     }
-  } 
 
-  else {
-    header("location: profile.php");
   }
-  ?>
+
+?>
     <label for = "location">Location</label>
     <select name = "location">
     ?>

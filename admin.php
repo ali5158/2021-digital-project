@@ -10,12 +10,12 @@ $results = mysqli_query($conn,$sql);
 <h2>Admin Page</h2>
 
   <div class = "inputlabel">
-    <form action = "edit.php" method = "post">
-    <label for = "item">Reports</label>
-    <select name = "item">
-        <?php while($category = mysqli_fetch_array($results,MYSQLI_ASSOC)): ?>
-            <option value="<?php echo $category["item_id"]; ?>">
-                <?php echo $category['item_id'] . ' | ' . $category["item_name"]; ?>
+    <form action = "report.php" method = "post">
+    <label for = "report">Reports</label>
+    <select name = "report">
+        <?php while($report = mysqli_fetch_array($results,MYSQLI_ASSOC)): ?>
+            <option value="<?php echo $report["report_id"]; ?>">
+                <?php echo $report["report_name"]; ?>
             </option>
         <?php endwhile; ?>
     <input type = "submit" name = "submit" value = "View Report">

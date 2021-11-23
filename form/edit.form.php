@@ -16,6 +16,10 @@ if(isset($_POST["submit"])) {
 	require_once '../includes/dbh.inc.php';
 	require_once '../includes/functions.inc.php';
 
+	if (emptyInputEdit($item_name,$category,$item_value,$date_lost,$item_id,$status,$location_id) === true) {
+		header("location: ../profile.php?error=emptyinput");
+		exit();
+	}
 
 	editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id,$status,$location_id);
 

@@ -33,13 +33,14 @@
 
   <div class="inputlabel">
     <label for = "itemvalue">Value</label>
+    <br>
     <select name = "category" id = "w20">
             <option value="<"><</option>
             <option value="=">=</option>
             <option value=">">></option>
             </option>
     </select>
-    <input type = "text" name= "item_value" placeholder= "Item Value" id = "w40">
+    <input type = "text" name= "item_value" placeholder= "Item Value" id = "w60">
   </div>
 
 
@@ -47,14 +48,7 @@
     <label for = "date_lost">Date Lost</label>
     <input type = "date" name = "date_lost">
   </div>
-<?php
-if ($_SESSION["is_admin"] === 1) {
-    echo "<div class = 'inputlabel'>";
-    echo "<label for = 'showall'>Show all</label>";
-    echo "<input type = 'checkbox' name='showall'>";
-    echo "</div>";
-}
-?>
+
   <input type = "submit" name = "submit" value = "Search">
  </form>
  <h4> * Indicates required field </h4>
