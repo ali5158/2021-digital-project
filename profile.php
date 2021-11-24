@@ -2,6 +2,8 @@
 <link rel="stylesheet" href ="css/form-style.css">
 
 <?php
+ $recordsinlost = "";
+ $recordsinfound = "";
  include_once 'includes/header.php';
  include_once 'includes/login-check.php';
  include_once 'includes/dbh.inc.php';
@@ -60,6 +62,7 @@
         else {
             echo "</table>";
             echo "<div class = 'isa_info'>" . "<i class = 'fa fa-info-circle'></i>You have no lost items" . "</div>";
+            $recordsinlost = false;
         }
     ?>
 </table>
@@ -103,7 +106,11 @@
     //Echo message if no records were returned
       echo "</table>";
       echo "<div class = 'isa_info'>" . "<i class = 'fa fa-info-circle'></i>You have no found items" . "</div>";
+      $recordsinfound = false;
     }
+if ($recordsinfound === false && $recordsinlost === false) {
+  exit();
+}
 ?>
 
 </table>
@@ -115,7 +122,6 @@
     <label for = "item">My Items</label>
     <select name = "item">
         <?php
-        // Look at this later, something is up
         $sql = $basesql . " AND `status_id` IN ('1','2')";
         $all_items = mysqli_query($conn,$sql);
 
@@ -127,3 +133,5 @@
     <input type = "submit" name = "submit" value = "Edit">
     </form>
   </div>
+
+

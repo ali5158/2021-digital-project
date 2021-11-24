@@ -63,5 +63,8 @@ if (isset($_GET["error"])) {
     if ($_GET["error"] == "dateinvalid") {
         echo "<div class='isa_error'>" . "<i class='fa fa-times-circle'></i>Date lost is greater than todays date" . "</div>";
     }
+    if ($_GET["error"] == "valueinvalid") {
+        echo "<div class='isa_error'>" . "<i class='fa fa-times-circle'></i>Value must be only numbers" . "</div>";
+    }
 }
 ?>

@@ -23,6 +23,7 @@
 			  if ($_SESSION["is_admin"] === 1) {
 			    echo "<li><a href = '#'>Admin</a>";
 				echo   "<ul>";
+				echo     "<li><a href = 'search_result.php?type=archive'>Items to archive</a></li>";
 				echo     "<li><a href = 'search_result.php?type=allitems'>View all items</a></li>";
 				echo     "<li><a href = 'admin.php'>View Reports</a></li>";
 				echo   "</ul>";

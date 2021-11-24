@@ -1,8 +1,8 @@
 <?php 
 
-include_once 'includes/header.php';
-include_once 'includes/login-check.php';
-include 'includes/dbh.inc.php';
+  include_once 'includes/header.php';
+  include_once 'includes/login-check.php';
+  include 'includes/dbh.inc.php';
 ?>
 
 <h2>Upload an Item</h2>
@@ -10,12 +10,12 @@ include 'includes/dbh.inc.php';
 <link rel="stylesheet" href ="css/form-style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<div class ="upload-form">
+<div class = "upload-form">
  <form action="form/upload.form.php" method="post">
 
-  <div class="inputlabel">
+  <div class= "inputlabel">
    <label for = "itemname">Item Name</label>
-   <input type = "text" name= "item_name" placeholder= "Item Name">
+   <input type = "text" name= "item_name" placeholder= "Item Name" required>
   </div>
 
   <div class = "inputlabel">
@@ -34,12 +34,12 @@ include 'includes/dbh.inc.php';
 
   <div class="inputlabel">
     <label for = "itemvalue">Value</label>
-    <input type = "text" name= "item_value" placeholder= "Item Value">
+    <input type = "text" name= "item_value" placeholder= "Item Value" required>
   </div>
 
   <div class = "inputlabel">
   	<label for = "date_lost">Date Lost</label>
-  	<input type = "date" value="<?php  date_default_timezone_set("pacific/auckland"); echo date("d-m-y"); ?>" name ="date_lost">
+  	<input type = "date" value="<?php  date_default_timezone_set("pacific/auckland"); echo date("Y-m-d"); ?>" name ="date_lost">
   </div>
 <?php
   if (isset($_GET["type"])) {
@@ -54,7 +54,7 @@ include 'includes/dbh.inc.php';
         echo "<input type = 'hidden' value = 'lost' name='item_type'>";
     }
 
-  }
+  } 
 
 ?>
     <label for = "location">Location</label>
@@ -69,10 +69,12 @@ include 'includes/dbh.inc.php';
         </option>
     <?php endwhile; ?>
     </select>
+    </div>
 
   <input type = "submit" name = "submit" value = "Upload">
+
 </form>
-</div>
+
 
 <?php 
 if (isset($_GET["error"])) {
@@ -84,9 +86,14 @@ if (isset($_GET["error"])) {
     if ($_GET["error"] == "dateinvalid") {
         echo "<div class='isa_error'>" . "<i class='fa fa-times-circle'></i>Date lost is greater than todays date" . "</div>";
     }
+    
+    if ($_GET["error"] == "valueinvalid") {
+        echo "<div class='isa_error'>" . "<i class='fa fa-times-circle'></i>Value must be only numbers" . "</div>";
+    }
 
     else if ($_GET["error"] == "none") {
         echo "<div class='isa_success'>" . "<i class='fa fa-check'></i>Item successfully posted" . "</div>";
     }
 }
 ?>
+

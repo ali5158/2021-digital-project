@@ -19,14 +19,23 @@ if(isset($_POST["submit"])) {
   } 
 
   else {
-    //Location is set to unknown & item_type set to found
+    //item_type set to found
     $item_type = 2;
   }
 
 
 	require_once '../includes/dbh.inc.php';
 	require_once '../includes/functions.inc.php';
-  dateCheck($date_lost,'../upload.php?error=dateinvalid');
+
+
+  if ($item_type == 2) {
+    dateCheck($date_lost,'../upload.php?error=dateinvalid&type=found');
+    valueCheck($item_value,'../upload.php?error=valueinvalid&type=found');
+  }
+  else {
+    dateCheck($date_lost,'../upload.php?error=dateinvalid&type=lost');
+    valueCheck($item_value,'../upload.php?error=valueinvalid&type=lost');
+  }
   createItem($conn,$item_name,$category,$item_value,$date_lost,$user_id,$item_type,$location);
 }
 

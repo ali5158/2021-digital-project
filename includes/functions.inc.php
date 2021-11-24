@@ -161,6 +161,17 @@ function loginUser($conn,$email,$password) {
 
 // Upload Functions
 
+function emptyInputUpload($item_name,$category,$item_value,$date_lost,$user_id,$item_type,$location) {
+  $result;
+  if (empty($item_name) || empty($category) || empty($item_value) || empty($date_lost) || empty($user_id) || empty($item_type) || empty($location)) {
+    $result = true;
+  }
+  else {
+    $result = false;
+  }
+  return $result;
+}
+
 function createItem($conn,$item_name,$category,$item_value,$date_lost,$user_id,$item_type,$location) {
   $sql = "INSERT INTO items (item_name,date_lost,category_id,item_value,user_id,status_id,location_id) VALUES (?,?,?,?,?,?,?);";
   $stmt = mysqli_stmt_init($conn);
@@ -173,7 +184,7 @@ function createItem($conn,$item_name,$category,$item_value,$date_lost,$user_id,$
   mysqli_stmt_bind_param($stmt,"sssssss",$item_name,$date_lost,$category,$item_value,$user_id,$item_type,$location);
   mysqli_stmt_execute($stmt);
   mysqli_stmt_close($stmt);
-  header("location: ../upload.php?error=none");
+  header("location: ../profile.php?error=none");
   exit();
 }
 
@@ -201,7 +212,7 @@ function editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id,$st
   $sql = "UPDATE `items` 
 		  SET `item_name` = ?, `date_lost` = ?, `category_id` = ?, `item_value` = ?, `location_id` = ?, `status_id` = ?";
 
-  if ($status_id == "3") {
+  if ($status_id == "3" || $status_id == "4") {
 	$sql .= ", `date_found` = ?";
   }
 
@@ -233,27 +244,17 @@ function editItem($conn,$item_name,$category,$item_value,$date_lost,$item_id,$st
 // Search Functions
 
 function dateCheck($date,$headerlocation) {
+  date_default_timezone_set("pacific/auckland"); 
+  $today = date("Y-m-d");
   if ($date > $today) {
     header("location: " . $headerlocation);
     exit();
   }
 } 
 
-
-function validateValue($value,$operator) {
-  if (strpos($value,'<') !== false) {
-	$operator = '<';
-  }
-
-  elseif (strpos($value,'>') !== false) {
-	$operator = '>';
-  }
-
-  elseif (strpos($value,'=') !== false) {
-	$operator = "=";
-  }
-
-  elseif (!isset($value)) {
-	$operator = "";
+function valueCheck($item_value,$headerlocation) {
+  if(preg_match('#[^0-9]#',$item_value)) {
+    header("location: " . $headerlocation);
+    exit();
   }
 }
