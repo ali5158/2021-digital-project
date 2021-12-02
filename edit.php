@@ -3,6 +3,7 @@
   include_once 'includes/login-check.php';
   include 'includes/dbh.inc.php';
   //Get item_id from the URL
+  
   $item_id = $_POST["item"];
 
   //SQL and Query for item_id passed in through URL
@@ -33,7 +34,6 @@
   <div class = "inputlabel">
     <label for = "category">Category</label>
     <select name = "category">
-      <option value = "">Select...</option>
       <?php while($category = mysqli_fetch_array($all_categories,MYSQLI_ASSOC)):?>
         <option value="<?php echo $category['category_id']; ?>">
           <?php echo $category["category_name"]; ?>
@@ -55,7 +55,6 @@
   <div class = "inputlabel">
     <label for = "status">Action</label>
     <select name = "status">
-        <option value = "">Select...</option>
         <?php 
         $sql = "SELECT * FROM `status` WHERE is_active = 1;";
         $all_status = mysqli_query($conn,$sql);
@@ -71,7 +70,6 @@
   <div class = "inputlabel">
     <label for = "location_id">Location</label>
     <select name = "location_id">
-        <option value = "">Select...</option>
         <?php 
         $sql = "SELECT * FROM `location` WHERE is_active = 1;";
         $all_locations = mysqli_query($conn,$sql);
